@@ -6,6 +6,7 @@ import (
 	"github.com/trungnghia250/shoes_store/db"
 	"github.com/trungnghia250/shoes_store/router"
 	"log"
+	"os"
 )
 
 func main() {
@@ -16,5 +17,7 @@ func main() {
 
 	app := fiber.New()
 	router.Create(app)
-	_ = app.Listen(":4000")
+	port := os.Getenv("PORT")
+
+	_ = app.Listen(":"+port)
 }

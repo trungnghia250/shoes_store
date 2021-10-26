@@ -14,4 +14,17 @@ func Create(app fiber.Router) {
 	r = app.Group("/customer")
 	r.Post("/", handler.CreateCustomer)
 	r.Get("/", handler.GetCustomerByID)
+	r.Put("/", handler.UpdateCustomerInfo)
+
+	r = app.Group("/brand")
+	r.Get("/:brand_name", handler.ListBrandProduct)
+
+	r = app.Group("/shoes")
+	r.Get("/size/:size", handler.ListProductBySize)
+	r.Get("/id/:id", handler.GetProductByID)
+	r.Post("/", handler.CreateProduct)
+
+	r = app.Group("/order")
+	r.Get("/", handler.ListOrderByUserID)
+	r.Post("/", handler.CreateOrder)
 }

@@ -30,3 +30,25 @@ func CreateCustomer(c *fiber.Ctx) error {
 	}
 	return c.JSON(customer)
 }
+
+func UpdateCustomerInfo(c *fiber.Ctx) error {
+	req := new(model.GetCusRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+	body := new(model.Customer)
+	if err := c.BodyParser(body); err != nil {
+		return err
+	}
+
+	err := service.UpdateCustomerByID(c, req.ID, body)
+	if err!= nil {
+		return err
+	}
+
+	customer, err := service.GetCustomerByID(c, req.ID)
+	if err != nil {
+		return err
+	}
+	return c.JSON(customer)
+}

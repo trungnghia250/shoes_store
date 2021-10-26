@@ -37,3 +37,16 @@ func GetCustomerByID(c *fiber.Ctx, id int32) (*model.Customer, error) {
 
 	return cus, nil
 }
+
+func UpdateCustomerByID(c *fiber.Ctx, id int32, data *model.Customer) error {
+	_, err := db.DB.Customer.UpdateOne(c.Context(), bson.M{
+		"_id": id,
+	}, bson.M{
+		"$set": data,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

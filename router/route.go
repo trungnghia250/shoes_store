@@ -23,6 +23,7 @@ func Create(app fiber.Router) {
 	r.Get("/size/:size", handler.ListProductBySize)
 	r.Get("/id/:id", handler.GetProductByID)
 	r.Post("/", handler.CreateProduct)
+	r.Get("/", handler.ListAllProduct)
 
 	r = app.Group("/order")
 	r.Get("/", handler.ListOrderByUserID)

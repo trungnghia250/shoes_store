@@ -52,3 +52,12 @@ func CreateProduct(c *fiber.Ctx) error {
 	}
 	return c.JSON(customer)
 }
+
+func ListAllProduct(c *fiber.Ctx) error {
+	products, err := service.ListAllProduct(c)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(products)
+}

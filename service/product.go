@@ -68,3 +68,17 @@ func CreateProduct(c *fiber.Ctx, data *model.Product) (*model.Product, error) {
 
 	return data, nil
 }
+
+func ListAllProduct(c *fiber.Ctx) ([]*model.Product, error) {
+	var products []*model.Product
+	cursor, err := db.DB.Product.Find(c.Context(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
+
+	if err = cursor.All(c.Context(), &products); err != nil {
+		return nil, err
+	}
+
+	return products, nil
+}

@@ -17,9 +17,9 @@ func main() {
 	defer db.DB.Client.Disconnect(context.Background())
 
 	app := fiber.New()
-	router.Create(app)
 
 	app.Use(cors.New())
+	router.Create(app)
 	port := os.Getenv("PORT")
 
 	_ = app.Listen(":"+port)

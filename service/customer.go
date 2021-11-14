@@ -66,15 +66,15 @@ func UpdatePasswordByEmail(c *fiber.Ctx, email, password string) error {
 	return nil
 }
 
-func Login(c *fiber.Ctx, req *model.LoginRequest) error {
+func Login(c *fiber.Ctx, req *model.LoginRequest) (*model.Customer, error) {
 	cus := new(model.Customer)
 	if err := db.DB.Customer.FindOne(c.Context(), bson.M{
 		"email":    req.Email,
 		"password": req.Password,
 	}).Decode(&cus); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return cus, nil
 }
 
 func ForgetPassword(c *fiber.Ctx, req *model.ForgetRequest) error {

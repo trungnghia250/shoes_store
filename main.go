@@ -15,6 +15,9 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.DB.Client.Disconnect(context.Background())
+	if err := db.ConnectAws(); err != nil {
+		log.Fatal(err)
+	}
 	app := fiber.New()
 
 	app.Use(cors.New())

@@ -58,12 +58,11 @@ func Login(c *fiber.Ctx) error {
 	if err := c.BodyParser(req); err != nil {
 		return err
 	}
-	responseStatus := "SUCCESS"
-	err := service.Login(c, req)
+	customer, err := service.Login(c, req)
 	if err != nil {
-		responseStatus = "WRONG"
+		return c.JSON("WRONG")
 	}
-	return c.JSON(responseStatus)
+	return c.JSON(customer)
 }
 
 func ForgetPassword(c *fiber.Ctx) error {

@@ -12,3 +12,12 @@ type Customer struct {
 type GetCusRequest struct {
 	ID int32 `json:"id"`
 }
+
+type LoginRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type ForgetRequest struct {
+	Email    string `json:"email"`
+}

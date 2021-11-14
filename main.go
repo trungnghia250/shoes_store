@@ -15,7 +15,6 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.DB.Client.Disconnect(context.Background())
-
 	app := fiber.New()
 
 	app.Use(cors.New())

@@ -11,6 +11,10 @@ func Create(app fiber.Router) {
 	r = app.Group("/homepage")
 	r.Get("/", handler.GetHomePage)
 
+	r = app.Group("/user")
+	r.Post("/login", handler.Login)
+	r.Post("/forget", handler.ForgetPassword)
+
 	r = app.Group("/customer")
 	r.Post("/", handler.CreateCustomer)
 	r.Get("/", handler.GetCustomerByID)

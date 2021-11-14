@@ -42,7 +42,7 @@ func UpdateCustomerInfo(c *fiber.Ctx) error {
 	}
 
 	err := service.UpdateCustomerByID(c, req.ID, body)
-	if err!= nil {
+	if err != nil {
 		return err
 	}
 
@@ -51,4 +51,31 @@ func UpdateCustomerInfo(c *fiber.Ctx) error {
 		return err
 	}
 	return c.JSON(customer)
+}
+
+func Login(c *fiber.Ctx) error {
+	req := new(model.LoginRequest)
+	if err := c.BodyParser(req); err != nil {
+		return err
+	}
+	responseStatus := "SUCCESS"
+	err := service.Login(c, req)
+	if err != nil {
+		responseStatus = "WRONG"
+	}
+	return c.JSON(responseStatus)
+}
+
+func ForgetPassword(c *fiber.Ctx) error {
+	req := new(model.ForgetRequest)
+	if err := c.BodyParser(req); err != nil {
+		return err
+	}
+	err := service.ForgetPassword(c, req)
+	responseStatus := "SUCCESS"
+	if err != nil {
+		responseStatus = "FAILED"
+	}
+	return c.JSON(responseStatus)
+
 }

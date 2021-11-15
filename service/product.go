@@ -82,3 +82,24 @@ func ListAllProduct(c *fiber.Ctx) ([]*model.Product, error) {
 
 	return products, nil
 }
+
+func UpdateProduct(c *fiber.Ctx, id int32, data *model.Product) error {
+	_, err := db.DB.Product.UpdateOne(c.Context(), bson.M{
+		"_id": id,
+	}, bson.M{
+		"$set": data,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DeleteProductByID(c *fiber.Ctx, id int32) error {
+	_, err := db.DB.Product.DeleteOne(c.Context(), bson.M{"_id": id})
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -1,13 +1,17 @@
 package model
 
 type Product struct {
-	ID          int32  `json:"_id" bson:"_id"`
-	Name        string `json:"name" bson:"name"`
-	Brand       string `json:"brand" bson:"brand"`
-	Price       int32  `json:"price" bson:"price"`
-	Link        string `json:"link" bson:"link"`
-	Gender      string `json:"gender" bson:"gender"`
-	Size        int32  `json:"size" bson:"size"`
-	Description string `json:"description" bson:"description"`
-	Discount    int32  `json:"discount" bson:"discount"`
+	ID          int32  `json:"_id,omitempty" bson:"_id,omitempty"`
+	Name        string `json:"name,omitempty" bson:"name,omitempty"`
+	Brand       string `json:"brand,omitempty" bson:"brand,omitempty"`
+	Price       int32  `json:"price,omitempty" bson:"price,omitempty"`
+	Link        string `json:"link,omitempty" bson:"link,omitempty"`
+	Gender      string `json:"gender,omitempty" bson:"gender,omitempty"`
+	Size        int32  `json:"size,omitempty" bson:"size,omitempty"`
+	Description string `json:"description,omitempty" bson:"description,omitempty"`
+	Discount    int32  `json:"discount,omitempty" bson:"discount,omitempty"`
+}
+
+type UpdateRequest struct {
+	Id int32 `json:"id"`
 }

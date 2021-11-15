@@ -142,3 +142,34 @@ func getImageBuffer(body multipart.File) ([]byte, error) {
 
 	return buffer, nil
 }
+
+func UpdateProduct(c *fiber.Ctx) error {
+	req := new(model.UpdateRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+
+	body := new(model.Product)
+	if err := c.BodyParser(body); err != nil {
+		return err
+	}
+
+	err := service.UpdateProduct(c, req.Id, body)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(DefaultResponse{StatusCode: fiber.StatusOK})
+}
+
+func DeleteProduct(c *fiber.Ctx) error {
+	req := new(model.GetCusRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+	err := service.DeleteProductByID(c, req.ID)
+	if err != nil {
+		return err
+	}
+	return c.JSON(DefaultResponse{StatusCode: fiber.StatusOK})
+}

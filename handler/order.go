@@ -20,7 +20,6 @@ func ListOrderByUserID(c *fiber.Ctx) error {
 	return c.JSON(orders)
 }
 
-
 func CreateOrder(c *fiber.Ctx) error {
 	req := new(model.Order)
 	if err := c.BodyParser(req); err != nil {
@@ -32,4 +31,60 @@ func CreateOrder(c *fiber.Ctx) error {
 		return err
 	}
 	return c.JSON(customer)
+}
+
+func ListAllOrders(c *fiber.Ctx) error {
+	orders, err := service.ListAllOrders(c)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(orders)
+}
+
+func UpdateOrder(c *fiber.Ctx) error {
+	req := new(model.UpdateRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+
+	body := new(model.Order)
+	if err := c.BodyParser(body); err != nil {
+		return err
+	}
+
+	err := service.UpdateOrder(c, req.Id, body)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(DefaultResponse{
+		StatusCode: fiber.StatusOK,
+	})
+}
+
+func GetOrderByID(c *fiber.Ctx) error {
+	req := new(model.UpdateRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+
+	order, err := service.GetOrderByID(c, req.Id)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(order)
+}
+
+func DeleteOrder(c *fiber.Ctx) error {
+	req := new(model.GetCusRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+	err := service.DeleteOrderByID(c, req.ID)
+	if err != nil {
+		return err
+	}
+	return c.JSON(DefaultResponse{StatusCode: fiber.StatusOK})
 }

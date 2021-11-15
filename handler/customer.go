@@ -78,3 +78,27 @@ func ForgetPassword(c *fiber.Ctx) error {
 	return c.JSON(responseStatus)
 
 }
+
+func ListUsers(c *fiber.Ctx) error {
+	listUser, err := service.ListUsers(c)
+	if err != nil {
+		return err
+	}
+	return c.JSON(listUser)
+}
+
+func DeleteCustomer(c *fiber.Ctx) error {
+	req := new(model.GetCusRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+	err := service.DeleteUserByID(c, req.ID)
+	if err != nil {
+		return err
+	}
+	return c.JSON(DefaultResponse{StatusCode: fiber.StatusOK})
+}
+
+type DefaultResponse struct {
+	StatusCode int32 `json:"status_code"`
+}

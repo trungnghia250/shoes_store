@@ -106,3 +106,25 @@ func ForgetPassword(c *fiber.Ctx, req *model.ForgetRequest) error {
 	}
 	return nil
 }
+
+func ListUsers(c *fiber.Ctx) ([]*model.Customer, error) {
+	var users []*model.Customer
+	cursor, err := db.DB.Customer.Find(c.Context(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
+
+	if err = cursor.All(c.Context(), &users); err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
+func DeleteUserByID(c *fiber.Ctx, id int32) error {
+	_, err := db.DB.Customer.DeleteOne(c.Context(), bson.M{"_id": id})
+	if err != nil {
+		return err
+	}
+	return nil
+}

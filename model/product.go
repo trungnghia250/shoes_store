@@ -10,6 +10,8 @@ type Product struct {
 	Size        int32  `json:"size,omitempty" bson:"size,omitempty"`
 	Description string `json:"description,omitempty" bson:"description,omitempty"`
 	Discount    int32  `json:"discount,omitempty" bson:"discount,omitempty"`
+	Color       string `json:"color,omitempty" bson:"color,omitempty"`
+	Quantity    int32  `json:"quantity,omitempty" bson:"quantity,omitempty"`
 }
 
 type UpdateRequest struct {

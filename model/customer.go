@@ -7,6 +7,7 @@ type Customer struct {
 	Dob      string `json:"dob,omitempty" bson:"dob,omitempty"`
 	Email    string `json:"email,omitempty" bson:"email,omitempty"`
 	Password string `json:"password,omitempty" bson:"password,omitempty"`
+	DeliveryInfo string `json:"delivery_info,omitempty" bson:"delivery_info,omitempty"`
 }
 
 type GetCusRequest struct {

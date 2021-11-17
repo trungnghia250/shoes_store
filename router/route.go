@@ -42,4 +42,6 @@ func Create(app fiber.Router) {
 	r.Get("/one", handler.GetOrderByID)
 	r.Delete("/", handler.DeleteOrder)
 
+	r = app.Post("/schedule", handler.Schedule)
+
 }

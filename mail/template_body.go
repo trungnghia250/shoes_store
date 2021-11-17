@@ -20,12 +20,6 @@ func WithIntros(intros []string) OptionBody {
 	}
 }
 
-func WithOuttros(outtros []string) OptionBody {
-	return func(template *Template) {
-		template.email.Body.Outros = outtros
-	}
-}
-
 func WithTitle(title string) OptionBody {
 	return func(template *Template) {
 		template.email.Body.Title = title
@@ -88,6 +82,17 @@ func WithAction(actions []EmailButton) OptionBody {
 	}
 }
 
+func WithOuttros(outtros []string) OptionBody {
+	return func(template *Template) {
+		template.email.Body.Outros = outtros
+	}
+}
+
+func WithTable(data hermes.Table) OptionBody {
+	return func(template *Template) {
+		template.email.Body.Table = data
+	}
+}
 func WithLogo(logo string) OptionBody {
 	return func(template *Template) {
 		template.template.Product.Logo = logo

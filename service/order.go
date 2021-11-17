@@ -1,9 +1,12 @@
 package service
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/matcornic/hermes/v2"
 	"github.com/pkg/errors"
 	"github.com/trungnghia250/shoes_store/db"
+	"github.com/trungnghia250/shoes_store/mail"
 	"github.com/trungnghia250/shoes_store/model"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -81,6 +84,69 @@ func GetOrderByID(c *fiber.Ctx, id int32) (*model.Order, error) {
 
 func DeleteOrderByID(c *fiber.Ctx, id int32) error {
 	_, err := db.DB.Order.DeleteOne(c.Context(), bson.M{"_id": id})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func Schedule(c *fiber.Ctx, data *model.Schedule) error {
+	id, err := getSequenceNextValue(c, "schedule_id")
+	if err != nil {
+		return err
+	}
+
+	data.Id = id
+	_, err = db.DB.Schedule.InsertOne(c.Context(), data)
+	if err != nil {
+		return err
+	}
+
+	opts := []mail.OptMessage{
+		mail.WithMessageHTML("Amazing Shoes Confirmed Email",
+			mail.WithTable(hermes.Table{
+				Data:    [][]hermes.Entry{
+					[]hermes.Entry{
+						hermes.Entry{
+							Key:   "Customer name",
+							Value: data.Name,
+						},
+						hermes.Entry{
+							Key:   "Email",
+							Value: data.Email,
+						},
+						hermes.Entry{
+							Key:   "Address",
+							Value: data.Address,
+						},
+						hermes.Entry{
+							Key:   "Pack",
+							Value: data.Pack,
+						},
+						hermes.Entry{
+							Key:   "Number of Pairs",
+							Value: fmt.Sprintf("%d pairs",data.NumOfPair),
+						},
+						hermes.Entry{
+							Key:   "Time Send",
+							Value: data.SendTime,
+						},
+						hermes.Entry{
+							Key:   "Time want to received",
+							Value: data.ReceivedTime,
+						},
+						hermes.Entry{
+							Key:   "Total",
+							Value: fmt.Sprintf("%d VND", data.Total),
+						},
+					},
+				},
+			}),
+			mail.WithOuttros([]string{"Need help, or have questions? Just reply to this email, we'd love to help."}),
+			mail.WithIntros([]string{"Thanks for choosing Amazing Store! We have received your booking cleaning shoes service. All about information that:"})),
+
+		mail.WithTo([]string{data.Email})}
+	err = mail.Send(opts...)
 	if err != nil {
 		return err
 	}

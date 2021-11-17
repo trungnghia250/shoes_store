@@ -88,3 +88,18 @@ func DeleteOrder(c *fiber.Ctx) error {
 	}
 	return c.JSON(DefaultResponse{StatusCode: fiber.StatusOK})
 }
+
+func Schedule(c *fiber.Ctx) error {
+	req := new(model.Schedule)
+	if err := c.BodyParser(req); err != nil {
+		return err
+	}
+
+	err := service.Schedule(c,req)
+	if err != nil {
+		return err
+	}
+	return c.JSON(DefaultResponse{
+		StatusCode: fiber.StatusOK,
+	})
+}

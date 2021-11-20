@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/trungnghia250/shoes_store/model"
 	"github.com/trungnghia250/shoes_store/service"
+	"log"
 )
 
 func ListOrderByUserID(c *fiber.Ctx) error {
@@ -23,14 +24,16 @@ func ListOrderByUserID(c *fiber.Ctx) error {
 func CreateOrder(c *fiber.Ctx) error {
 	req := new(model.Order)
 	if err := c.BodyParser(req); err != nil {
+		log.Fatal(err)
 		return err
 	}
 
-	customer, err := service.CreateOrder(c, req)
+	order, err := service.CreateOrder(c, req)
 	if err != nil {
+		log.Fatal(err)
 		return err
 	}
-	return c.JSON(customer)
+	return c.JSON(order)
 }
 
 func ListAllOrders(c *fiber.Ctx) error {

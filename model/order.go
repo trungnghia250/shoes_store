@@ -15,6 +15,7 @@ type Item struct {
 	Name  string `json:"name,omitempty" bson:"name,omitempty"`
 	Price int32  `json:"price,omitempty" bson:"price,omitempty"`
 	Num   int32  `json:"num,omitempty" bson:"num,omitempty"`
+	Link  string `json:"link,omitempty" bson:"link,omitempty"`
 }
 type GetOrderByUserIDRequest struct {
 	ID int32 `json:"id"`

@@ -25,6 +25,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	req := new(model.Order)
 	if err := c.BodyParser(req); err != nil {
 		log.Fatal(err)
+
 		return err
 	}
 

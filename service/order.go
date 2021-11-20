@@ -9,7 +9,6 @@ import (
 	"github.com/trungnghia250/shoes_store/mail"
 	"github.com/trungnghia250/shoes_store/model"
 	"go.mongodb.org/mongo-driver/bson"
-	"log"
 )
 
 func ListOrderByUserID(c *fiber.Ctx, userId int32) ([]*model.Order, error) {
@@ -35,15 +34,12 @@ func CreateOrder(c *fiber.Ctx, data *model.Order) (*model.Order, error) {
 
 	id, err := getSequenceNextValue(c, "order_id")
 	if err != nil {
-		log.Fatal(err)
-
 		return nil, err
 	}
 
 	data.ID = id
 	_, err = db.DB.Order.InsertOne(c.Context(), data)
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
 

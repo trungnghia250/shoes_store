@@ -30,7 +30,6 @@ func CreateOrder(c *fiber.Ctx) error {
 
 	order, err := service.CreateOrder(c, req)
 	if err != nil {
-		log.Fatal(err)
 		return err
 	}
 	return c.JSON(order)

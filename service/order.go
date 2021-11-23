@@ -43,6 +43,47 @@ func CreateOrder(c *fiber.Ctx, data *model.Order) (*model.Order, error) {
 		return nil, err
 	}
 
+	user, _ := GetCustomerByID(c, data.UserId)
+	opts := []mail.OptMessage{
+		mail.WithMessageHTML("Amazing Shoes Confirmed Order",
+			mail.WithTable(hermes.Table{
+				Data: [][]hermes.Entry{
+					[]hermes.Entry{
+						hermes.Entry{
+							Key:   "Customer Name",
+							Value: user.Name,
+						},
+						hermes.Entry{
+							Key:   "Item",
+							Value: data.Items[0].Name,
+						},
+						hermes.Entry{
+							Key:   "Information",
+							Value: "Description",
+						},
+						hermes.Entry{
+							Key:   "Payment Method",
+							Value: data.PaymentMethod,
+						},
+						hermes.Entry{
+							Key:   "Time Order",
+							Value: data.OrderDate,
+						},
+						hermes.Entry{
+							Key:   "Total",
+							Value: fmt.Sprintf("%d VND", data.Total),
+						},
+					},
+				},
+			}),
+			mail.WithOuttros([]string{"Need help, or have questions? Just reply to this email, we'd love to help."}),
+			mail.WithIntros([]string{"Thanks for choosing Amazing Store! We have received your order information. All about information that:"})),
+
+		mail.WithTo([]string{user.Email})}
+	err = mail.Send(opts...)
+	if err != nil {
+		return nil, err
+	}
 	return data, nil
 }
 
@@ -105,7 +146,7 @@ func Schedule(c *fiber.Ctx, data *model.Schedule) error {
 	opts := []mail.OptMessage{
 		mail.WithMessageHTML("Amazing Shoes Confirmed Email",
 			mail.WithTable(hermes.Table{
-				Data:    [][]hermes.Entry{
+				Data: [][]hermes.Entry{
 					[]hermes.Entry{
 						hermes.Entry{
 							Key:   "Customer name",
@@ -125,7 +166,7 @@ func Schedule(c *fiber.Ctx, data *model.Schedule) error {
 						},
 						hermes.Entry{
 							Key:   "Number of Pairs",
-							Value: fmt.Sprintf("%d pairs",data.NumOfPair),
+							Value: fmt.Sprintf("%d pairs", data.NumOfPair),
 						},
 						hermes.Entry{
 							Key:   "Time Send",

@@ -21,3 +21,7 @@ type Item struct {
 type GetOrderByUserIDRequest struct {
 	ID int32 `json:"id"`
 }
+
+type GetCommentByProductID struct {
+	ID int32 `json:"product_id"`
+}

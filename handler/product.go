@@ -10,6 +10,7 @@ import (
 	"github.com/trungnghia250/shoes_store/db"
 	"github.com/trungnghia250/shoes_store/model"
 	"github.com/trungnghia250/shoes_store/service"
+	"math"
 	"mime/multipart"
 
 	"strconv"
@@ -172,4 +173,29 @@ func DeleteProduct(c *fiber.Ctx) error {
 		return err
 	}
 	return c.JSON(DefaultResponse{StatusCode: fiber.StatusOK})
+}
+
+func Rating(c *fiber.Ctx) error {
+	req := new(model.UpdateRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+	body := new(model.RatingRequest)
+	if err := c.BodyParser(body); err != nil {
+		return err
+	}
+
+	product, err := service.GetProductByID(c, req.Id)
+	if err != nil {
+		return err
+	}
+
+	product.Rating.Value = math.Floor((product.Rating.Value*float64(product.Rating.TotalRating)+float64(body.Value))/float64(product.Rating.TotalRating+1)/0.01) * 0.01
+	product.Rating.TotalRating += 1
+
+	err = service.UpdateProduct(c, req.Id, product)
+	if err != nil {
+		return err
+	}
+	return c.JSON(product.Rating)
 }

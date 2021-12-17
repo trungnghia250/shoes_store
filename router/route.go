@@ -20,8 +20,7 @@ func Create(app fiber.Router) {
 	r.Post("/", handler.CreateCustomer)
 	r.Get("/", handler.GetCustomerByID)
 	r.Put("/", handler.UpdateCustomerInfo)
-	r.Delete("/", handler.DeleteCustomer )
-
+	r.Delete("/", handler.DeleteCustomer)
 
 	r = app.Group("/brand")
 	r.Get("/:brand_name", handler.ListBrandProduct)
@@ -33,6 +32,7 @@ func Create(app fiber.Router) {
 	r.Get("/", handler.ListAllProduct)
 	r.Put("/", handler.UpdateProduct)
 	r.Delete("/", handler.DeleteProduct)
+	r.Post("/rating", handler.Rating)
 
 	r = app.Group("/order")
 	r.Get("/", handler.ListOrderByUserID)
@@ -44,4 +44,14 @@ func Create(app fiber.Router) {
 
 	r = app.Post("/schedule", handler.Schedule)
 
+	r = app.Group("/comment")
+	r.Put("/", handler.CreateComment)
+	r.Get("/", handler.GetComment)
+
+	r = app.Group("/discount")
+	r.Put("/", handler.CreateDiscount)
+	r.Post("/", handler.UpdateDiscount)
+	r.Get("/", handler.GetDiscount)
+	r.Get("/list", handler.ListDiscount)
+	r.Delete("/", handler.DeleteDiscount)
 }

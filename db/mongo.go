@@ -13,6 +13,8 @@ type Database struct {
 	Counter  *mongo.Collection
 	Product  *mongo.Collection
 	Schedule *mongo.Collection
+	Comment  *mongo.Collection
+	Discount *mongo.Collection
 }
 
 var DB Database
@@ -48,6 +50,8 @@ func ConnectDB() error {
 		Counter:  shoesStoreDB.Collection("counter"),
 		Product:  shoesStoreDB.Collection("product"),
 		Schedule: shoesStoreDB.Collection("schedule"),
+		Comment:  shoesStoreDB.Collection("comment"),
+		Discount: shoesStoreDB.Collection("discount"),
 	}
 
 	return nil

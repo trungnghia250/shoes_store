@@ -207,3 +207,34 @@ func GetSchedule(c *fiber.Ctx) ([]*model.Schedule, error) {
 
 	return schedule, nil
 }
+
+func GetScheduleByID(c *fiber.Ctx, id int32) (*model.Schedule, error) {
+	var order *model.Schedule
+	if err := db.DB.Schedule.FindOne(c.Context(), bson.M{
+		"_id": id,
+	}).Decode(&order); err != nil {
+		return nil, err
+	}
+	return order, nil
+}
+
+func DeleteScheduleByID(c *fiber.Ctx, id int32) error {
+	_, err := db.DB.Schedule.DeleteOne(c.Context(), bson.M{"_id": id})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateSchedule(c *fiber.Ctx, id int32, data *model.Schedule) error {
+	_, err := db.DB.Schedule.UpdateOne(c.Context(), bson.M{
+		"_id": id,
+	}, bson.M{
+		"$set": data,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

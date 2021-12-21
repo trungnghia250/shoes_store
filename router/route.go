@@ -42,8 +42,12 @@ func Create(app fiber.Router) {
 	r.Get("/one", handler.GetOrderByID)
 	r.Delete("/", handler.DeleteOrder)
 
-	r = app.Post("/schedule", handler.Schedule)
-	r = app.Get("/schedule", handler.GetSchedule)
+	r = app.Group("/schedule")
+	r.Get("/list", handler.GetSchedule)
+	r.Post("/", handler.Schedule)
+	r.Get("/", handler.GetScheduleByID)
+	r.Delete("/", handler.DeleteSchedule)
+	r.Put("/", handler.UpdateSchedule)
 
 	r = app.Group("/comment")
 	r.Put("/", handler.CreateComment)

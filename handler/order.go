@@ -114,3 +114,50 @@ func GetSchedule(c *fiber.Ctx) error {
 	}
 	return c.JSON(schedules)
 }
+
+func GetScheduleByID(c *fiber.Ctx) error {
+	req := new(model.UpdateRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+
+	order, err := service.GetScheduleByID(c, req.Id)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(order)
+}
+
+func DeleteSchedule(c *fiber.Ctx) error {
+	req := new(model.GetCusRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+	err := service.DeleteScheduleByID(c, req.ID)
+	if err != nil {
+		return err
+	}
+	return c.JSON(DefaultResponse{StatusCode: fiber.StatusOK})
+}
+
+func UpdateSchedule(c *fiber.Ctx) error {
+	req := new(model.UpdateRequest)
+	if err := c.QueryParser(req); err != nil {
+		return err
+	}
+
+	body := new(model.Schedule)
+	if err := c.BodyParser(body); err != nil {
+		return err
+	}
+
+	err := service.UpdateSchedule(c, req.Id, body)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(DefaultResponse{
+		StatusCode: fiber.StatusOK,
+	})
+}

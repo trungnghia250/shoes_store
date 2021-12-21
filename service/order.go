@@ -193,3 +193,17 @@ func Schedule(c *fiber.Ctx, data *model.Schedule) error {
 	}
 	return nil
 }
+
+func GetSchedule(c *fiber.Ctx) ([]*model.Schedule, error) {
+	var schedule []*model.Schedule
+	cursor, err := db.DB.Schedule.Find(c.Context(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
+
+	if err = cursor.All(c.Context(), &schedule); err != nil {
+		return nil, err
+	}
+
+	return schedule, nil
+}

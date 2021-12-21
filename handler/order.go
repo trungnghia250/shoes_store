@@ -98,11 +98,19 @@ func Schedule(c *fiber.Ctx) error {
 		return err
 	}
 
-	err := service.Schedule(c,req)
+	err := service.Schedule(c, req)
 	if err != nil {
 		return err
 	}
 	return c.JSON(DefaultResponse{
 		StatusCode: fiber.StatusOK,
 	})
+}
+
+func GetSchedule(c *fiber.Ctx) error {
+	schedules, err := service.GetSchedule(c)
+	if err != nil {
+		return err
+	}
+	return c.JSON(schedules)
 }

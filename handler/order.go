@@ -36,7 +36,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	for _, item := range order.Items {
 		product, _ := service.GetProductByID(c, item.ID)
 		err = service.UpdateProduct(c, item.ID, &model.Product{
-			Quantity: product.Quantity - item.Num,
+			Quantity: product.Quantity - 1,
 		})
 	}
 	return c.JSON(order)

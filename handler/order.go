@@ -39,6 +39,13 @@ func CreateOrder(c *fiber.Ctx) error {
 			Quantity: product.Quantity - 1,
 		})
 	}
+
+	if len(order.DiscountCode) > 0 {
+		discount, _ := service.GetDiscountByName(c, order.DiscountCode)
+		_ = service.UpdateDiscount(c, discount.ID, &model.Discount{
+			Quantity: discount.Quantity - 1,
+		})
+	}
 	return c.JSON(order)
 }
 

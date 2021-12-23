@@ -9,6 +9,7 @@ type Order struct {
 	Total         int32  `json:"total,omitempty" bson:"total,omitempty"`
 	OrderDate     string `json:"order_date,omitempty" bson:"order_date,omitempty"`
 	PaymentMethod string `json:"payment_method,omitempty" bson:"payment_method,omitempty"`
+	DiscountCode  string `json:"discount_code,omitempty" bson:"discount_code,omitempty"`
 }
 
 type Item struct {

@@ -12,7 +12,7 @@ type Product struct {
 	Description   string `json:"description,omitempty" bson:"description,omitempty"`
 	Discount      int32  `json:"discount,omitempty" bson:"discount,omitempty"`
 	Color         string `json:"color,omitempty" bson:"color,omitempty"`
-	Quantity      int32  `json:"quantity,omitempty" bson:"quantity,omitempty"`
+	Quantity      int32  `json:"quantity" bson:"quantity"`
 	Rating        Rating `json:"rating,omitempty" bson:"rating,omitempty"`
 }
 

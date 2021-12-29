@@ -12,8 +12,8 @@ func ConnectAws() error {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("ap-southeast-1"),
 		Credentials: credentials.NewStaticCredentials(
-			"AKIA6CRZOCI6VGE5FD25",
-			"+kPxYIzMnKd1YTXnxoAji2MFy1UqQGqAOXko/fme",
+			"",
+			"",
 			""),
 	})
 	if err != nil {
